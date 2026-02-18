@@ -97,6 +97,7 @@ function App() {
   const firstPageAudioRef = useRef(null)
   const chatAudioRef = useRef(null)
   const cyberpunkChatAudioRef = useRef(null)
+  const phonkvarAudioRef = useRef(null)
 
   const characters = [
     { name: 'Neo', image: charOneImg },
@@ -155,7 +156,15 @@ function App() {
   }
 
   function toggleChatMusic() {
-    const activeRef = chatMusicTrack === 'phonklastpage' ? chatAudioRef.current : cyberpunkChatAudioRef.current
+    let activeRef
+    if (chatMusicTrack === 'phonklastpage') {
+      activeRef = chatAudioRef.current
+    } else if (chatMusicTrack === 'cyberpunkchatpage') {
+      activeRef = cyberpunkChatAudioRef.current
+    } else if (chatMusicTrack === 'phonkvar') {
+      activeRef = phonkvarAudioRef.current
+    }
+    
     if (activeRef) {
       if (isChatMusicPlaying) {
         activeRef.pause()
@@ -164,6 +173,7 @@ function App() {
         // Stop all chat music tracks
         if (chatAudioRef.current) chatAudioRef.current.pause()
         if (cyberpunkChatAudioRef.current) cyberpunkChatAudioRef.current.pause()
+        if (phonkvarAudioRef.current) phonkvarAudioRef.current.pause()
         // Play selected track
         activeRef.play()
         setIsChatMusicPlaying(true)
@@ -176,6 +186,7 @@ function App() {
     // Stop current track
     if (chatAudioRef.current) chatAudioRef.current.pause()
     if (cyberpunkChatAudioRef.current) cyberpunkChatAudioRef.current.pause()
+    if (phonkvarAudioRef.current) phonkvarAudioRef.current.pause()
     setIsChatMusicPlaying(false)
   }
 
@@ -188,6 +199,9 @@ function App() {
     }
     if (cyberpunkChatAudioRef.current) {
       cyberpunkChatAudioRef.current.volume = volume / 100
+    }
+    if (phonkvarAudioRef.current) {
+      phonkvarAudioRef.current.volume = volume / 100
     }
   }, [volume])
 
@@ -312,9 +326,10 @@ function App() {
 
   return (
     <div className="main-container">
-      <audio ref={firstPageAudioRef} src="/phonkfirstpage.mp3" />
-      <audio ref={chatAudioRef} src="/phonklastpage.mp3" />
-      <audio ref={cyberpunkChatAudioRef} src="/cyberpunkchatpage.mp3" />
+      <audio ref={firstPageAudioRef} src="/phonkfirstpage.mp3" loop />
+      <audio ref={chatAudioRef} src="/phonklastpage.mp3" loop />
+      <audio ref={cyberpunkChatAudioRef} src="/cyberpunkchatpage.mp3" loop />
+      <audio ref={phonkvarAudioRef} src="/phonkvar.mp3" loop />
       {screen !== 'chat' && (
         <button className="settings-btn" onClick={() => setShowSettings(true)} aria-label="Settings">⚙️</button>
       )}
@@ -398,6 +413,7 @@ function App() {
                   >
                     <option value="phonklastpage">🎵 Phonk</option>
                     <option value="cyberpunkchatpage">🎵 Cyber</option>
+                    <option value="phonkvar">🎵 Var</option>
                   </select>
                   <button className="music-toggle-btn" onClick={toggleFirstPageMusic} title={isFirstPageMusicPlaying ? 'Stop Music' : 'Play Music'}>
                     {isFirstPageMusicPlaying ? '⏸️ Stop' : '▶️ Play'}
@@ -458,6 +474,7 @@ function App() {
                     >
                       <option value="phonklastpage">🎵 Phonk</option>
                       <option value="cyberpunkchatpage">🎵 Cyber</option>
+                      <option value="phonkvar">🎵 Var</option>
                     </select>
                     <button className="music-toggle-btn" onClick={toggleChatMusic} title={isChatMusicPlaying ? 'Stop Music' : 'Play Music'}>
                       {isChatMusicPlaying ? '⏸️ Stop' : '▶️ Play'}

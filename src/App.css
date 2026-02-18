@@ -91,18 +91,21 @@
 }
 
 .info-panel {
-  position: absolute;
+  position: fixed;
   top: 20px;
   right: 20px;
-  z-index: 15;
-  width: min(420px, 70vw);
+  z-index: 100;
+  width: min(420px, 85vw);
+  max-height: 70vh;
+  overflow-y: auto;
   border: 2px solid rgba(188, 0, 255, 0.6);
-  background: rgba(16, 10, 28, 0.82);
+  background: rgba(16, 10, 28, 0.95);
   color: #fff;
-  padding: 14px;
+  padding: 16px;
   border-radius: 12px;
-  font-size: 10px;
-  line-height: 1.7;
+  font-size: 12px;
+  line-height: 1.8;
+  box-shadow: 0 0 20px rgba(188, 0, 255, 0.4);
 }
 
 .contact-content {
@@ -1327,7 +1330,9 @@
     width: calc(100% - 24px);
     right: 12px;
     top: 12px;
-    font-size: 9px;
+    font-size: 11px;
+    left: 12px;
+    max-height: 80vh;
   }
 
   .auth-screen {
